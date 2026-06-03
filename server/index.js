@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const githubRoutes = require('./routes/github');
 
 const app = express();
@@ -14,6 +15,13 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api/github', githubRoutes);
+
+// Serve frontend static files in production
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
