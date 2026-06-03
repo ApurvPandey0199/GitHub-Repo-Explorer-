@@ -42,7 +42,18 @@
   width: 100%;
 }
 
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
 @media (min-width: 768px) {
+  .left-column {
+    width: 300px;
+    min-width: 300px;
+  }
   .main-content {
     flex-direction: row;
     align-items: flex-start;

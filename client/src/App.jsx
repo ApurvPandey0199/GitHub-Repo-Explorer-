@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import SearchBar from './components/SearchBar';
+import RecentSearches from './components/RecentSearches';
 import ProfileCard from './components/ProfileCard';
+import LanguageChart from './components/LanguageChart';
 import SortControls from './components/SortControls';
 import RepoList from './components/RepoList';
 import Skeleton from './components/Skeleton';
@@ -17,6 +19,7 @@ function App() {
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [recentTrigger, setRecentTrigger] = useState(null);
 
   const fetchUserAndRepos = async (searchName) => {
     setLoading(true);
@@ -32,6 +35,7 @@ function App() {
       const reposData = await getRepos(searchName, { page: 1, sort });
       setRepos(reposData);
       setHasMore(reposData.length === 100);
+      setRecentTrigger(userData.login);
     } catch (err) {
       setError(err);
     } finally {
@@ -40,6 +44,7 @@ function App() {
   };
 
   const handleSearch = (searchName) => {
+    if (searchName === username) return;
     setUsername(searchName);
     fetchUserAndRepos(searchName);
   };
@@ -77,7 +82,8 @@ function App() {
   return (
     <div className="app-container">
       <header className="header">
-        <SearchBar onSearch={handleSearch} isLoading={loading} />
+        <SearchBar onSearch={handleSearch} isLoading={loading} initialValue={username} />
+        <RecentSearches onSelect={handleSearch} triggerSave={recentTrigger} />
       </header>
       
       <main className="main-content">
@@ -94,7 +100,10 @@ function App() {
         
         {user && !error && (
           <>
-            <ProfileCard user={user} />
+            <div className="left-column">
+              <ProfileCard user={user} />
+              <LanguageChart repos={repos} />
+            </div>
             <div className="repos-section">
               <SortControls sort={sort} onChange={handleSortChange} />
               <RepoList repos={repos} hasMore={hasMore} onLoadMore={handleLoadMore} />

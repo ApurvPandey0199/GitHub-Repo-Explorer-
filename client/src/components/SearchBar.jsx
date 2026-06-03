@@ -1,9 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDebounce } from '../hooks/useDebounce';
 import styles from './SearchBar.module.css';
 
-export default function SearchBar({ onSearch, isLoading }) {
-  const [input, setInput] = useState('');
+export default function SearchBar({ onSearch, isLoading, initialValue = '' }) {
+  const [input, setInput] = useState(initialValue);
   const [error, setError] = useState('');
+  
+  const debouncedInput = useDebounce(input, 500);
+
+  useEffect(() => {
+    setInput(initialValue);
+  }, [initialValue]);
+
+  useEffect(() => {
+    const trimmed = debouncedInput.trim();
+    if (trimmed.length >= 2 && !isLoading && trimmed !== initialValue) {
+      if (/^[a-zA-Z0-9-]{1,39}$/.test(trimmed)) {
+        setError('');
+        onSearch(trimmed);
+      } else {
+        setError('Invalid GitHub username');
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedInput]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
