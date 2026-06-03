@@ -3,8 +3,9 @@
 GitHub Repo Explorer is a full-stack web application developed as Exercise 3 for the Studio Graphene assessment. It allows users to search for GitHub profiles, view user statistics, and browse their repositories with filtering, sorting, and inline language visualizations.
 
 ## Live Demo
-- **Frontend (Vercel):** [Insert Frontend URL Here]
-- **Backend (Render):** [Insert Backend URL Here]
+🚀 **[Click here to view the Live Application](https://ApurvPandey0199.github.io/GitHub-Repo-Explorer-/)**
+
+*(Deployed via GitHub Pages)*
 
 ## Tech Stack
 - **Backend:** Node.js, Express, Axios. Chosen for lightweight routing, rapid development, and easy integration with external REST APIs.
