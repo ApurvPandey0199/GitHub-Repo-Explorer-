@@ -19,15 +19,27 @@ const fetchUser = async (username) => {
   return response.data;
 };
 
-const fetchRepos = async (username, page = 1) => {
+const fetchRepos = async (username, page = 1, sort = 'updated') => {
   const response = await githubAPI.get(`/users/${username}/repos`, {
-    params: { per_page: 100, page }
+    params: { per_page: 100, page, sort }
   });
+  return response.data;
+};
+
+const fetchRepoDetails = async (owner, repo) => {
+  const response = await githubAPI.get(`/repos/${owner}/${repo}`);
+  return response.data;
+};
+
+const fetchOrgs = async (username) => {
+  const response = await githubAPI.get(`/users/${username}/orgs`);
   return response.data;
 };
 
 module.exports = {
   githubAPI,
   fetchUser,
-  fetchRepos
+  fetchRepos,
+  fetchRepoDetails,
+  fetchOrgs
 };

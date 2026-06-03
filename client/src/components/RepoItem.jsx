@@ -85,6 +85,12 @@ export default function RepoItem({ repo }) {
             ⭐ {repo.stargazers_count}
           </div>
           <div className={styles.stat}>
+            🔀 {repo.forks_count}
+          </div>
+          <div className={styles.stat}>
+            👀 {repo.watchers_count}
+          </div>
+          <div className={styles.stat}>
             Updated {getRelativeTime(repo.updated_at)}
           </div>
         </div>
@@ -97,13 +103,19 @@ export default function RepoItem({ repo }) {
           {details && !loading && !error && (
             <div className={styles.detailsGrid}>
               <div className={styles.detailItem}>
-                <span className={styles.detailLabel}>Open Issues:</span>
+                <span className={styles.detailLabel}>Open Issues</span>
                 <span className={styles.detailValue}>{details.open_issues_count}</span>
               </div>
               <div className={styles.detailItem}>
-                <span className={styles.detailLabel}>Default Branch:</span>
+                <span className={styles.detailLabel}>Default Branch</span>
                 <span className={styles.detailValue}>{details.default_branch}</span>
               </div>
+              {details.license && (
+                <div className={styles.detailItem}>
+                  <span className={styles.detailLabel}>License</span>
+                  <span className={styles.detailValue}>{details.license.name}</span>
+                </div>
+              )}
             </div>
           )}
         </div>

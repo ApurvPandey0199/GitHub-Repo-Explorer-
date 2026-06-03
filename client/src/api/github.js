@@ -39,3 +39,12 @@ export const getRepoDetails = async (owner, repo) => {
     handleError(error);
   }
 };
+
+export const getOrgs = async (username) => {
+  try {
+    const response = await api.get(`/users/${username}/orgs`);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};

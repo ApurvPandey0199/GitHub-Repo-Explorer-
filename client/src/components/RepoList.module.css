@@ -13,29 +13,27 @@
 
 .loadMoreBtn {
   padding: 12px 24px;
-  background-color: #f6f8fa;
-  color: #0969da;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
+  background-color: var(--panel-bg);
+  color: var(--accent-color);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  min-height: 44px;
+  min-height: 48px;
   transition: all 0.2s;
   align-self: center;
 }
 
 .loadMoreBtn:hover {
-  background-color: #0969da;
-  color: white;
-  border-color: #0969da;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .emptyList {
-  padding: 32px;
+  padding: 48px 32px;
   text-align: center;
-  color: #57606a;
-  background: white;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
+  color: var(--text-secondary);
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
 }

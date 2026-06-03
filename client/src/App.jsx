@@ -2,17 +2,19 @@ import { useState } from 'react';
 import SearchBar from './components/SearchBar';
 import RecentSearches from './components/RecentSearches';
 import ProfileCard from './components/ProfileCard';
+import Organizations from './components/Organizations';
 import LanguageChart from './components/LanguageChart';
 import SortControls from './components/SortControls';
 import RepoList from './components/RepoList';
 import Skeleton from './components/Skeleton';
 import ErrorMessage from './components/ErrorMessage';
-import { getUser, getRepos } from './api/github';
+import { getUser, getRepos, getOrgs } from './api/github';
 import './App.css';
 
 function App() {
   const [username, setUsername] = useState('');
   const [user, setUser] = useState(null);
+  const [orgs, setOrgs] = useState([]);
   const [repos, setRepos] = useState([]);
   const [sort, setSort] = useState('updated');
   const [page, setPage] = useState(1);
@@ -25,12 +27,16 @@ function App() {
     setLoading(true);
     setError(null);
     setUser(null);
+    setOrgs([]);
     setRepos([]);
     setPage(1);
     
     try {
       const userData = await getUser(searchName);
       setUser(userData);
+      
+      const orgsData = await getOrgs(searchName);
+      setOrgs(orgsData || []);
       
       const reposData = await getRepos(searchName, { page: 1, sort });
       setRepos(reposData);
@@ -102,6 +108,7 @@ function App() {
           <>
             <div className="left-column">
               <ProfileCard user={user} />
+              <Organizations orgs={orgs} />
               <LanguageChart repos={repos} />
             </div>
             <div className="repos-section">

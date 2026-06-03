@@ -16,9 +16,9 @@
   flex-direction: column;
   align-items: center;
   padding: 24px;
-  background: white;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
   width: 100%;
   gap: 16px;
   animation: pulse 1.5s infinite ease-in-out;
@@ -26,37 +26,37 @@
 
 @media (min-width: 768px) {
   .profileSkeleton {
-    min-width: 300px;
-    width: 300px;
+    min-width: 320px;
+    width: 320px;
   }
 }
 
 .avatar {
-  width: 120px;
-  height: 120px;
+  width: 260px;
+  height: 260px;
   border-radius: 50%;
-  background-color: #eaeef2;
+  background-color: var(--panel-border);
 }
 
 .line {
   height: 14px;
-  background-color: #eaeef2;
+  background-color: var(--panel-border);
   border-radius: 4px;
   width: 100%;
 }
 
 .stats {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   width: 100%;
   margin-top: 16px;
 }
 
 .statBox {
-  height: 50px;
+  height: 60px;
   flex: 1;
-  background-color: #eaeef2;
-  border-radius: 6px;
+  background-color: var(--panel-border);
+  border-radius: 8px;
 }
 
 .listSkeleton {
@@ -67,10 +67,10 @@
 }
 
 .repoSkeleton {
-  padding: 16px;
-  background: white;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
+  padding: 24px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -80,11 +80,11 @@
 .footer {
   display: flex;
   gap: 16px;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 @keyframes pulse {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
+  0% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.4; }
 }
