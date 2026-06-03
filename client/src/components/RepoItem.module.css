@@ -1,11 +1,22 @@
 .repoItem {
-  padding: 16px;
   background: white;
   border: 1px solid #d0d7de;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+
+.mainContent {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
+  cursor: pointer;
+}
+
+.mainContent:hover {
+  background-color: #f6f8fa;
 }
 
 .header {
@@ -53,4 +64,41 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
+}
+
+.expandedContent {
+  border-top: 1px solid #d0d7de;
+  padding: 16px;
+  background-color: #f3f4f6;
+  font-size: 14px;
+}
+
+.spinner {
+  color: #57606a;
+  font-style: italic;
+}
+
+.error {
+  color: #cf222e;
+}
+
+.detailsGrid {
+  display: flex;
+  gap: 24px;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detailLabel {
+  color: #57606a;
+  font-size: 12px;
+}
+
+.detailValue {
+  font-weight: 600;
+  color: #24292f;
 }

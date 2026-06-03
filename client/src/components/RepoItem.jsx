@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { getRepoDetails } from '../api/github';
 import styles from './RepoItem.module.css';
 
 const languageColors = {
@@ -31,32 +33,81 @@ const getRelativeTime = (dateString) => {
 };
 
 export default function RepoItem({ repo }) {
+  const [expanded, setExpanded] = useState(false);
+  const [details, setDetails] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const langColor = languageColors[repo.language] || '#8b949e';
+
+  const handleExpand = async () => {
+    if (!expanded && !details) {
+      setLoading(true);
+      setError(null);
+      try {
+        const owner = repo.owner?.login || repo.full_name.split('/')[0];
+        const data = await getRepoDetails(owner, repo.name);
+        setDetails(data);
+      } catch (err) {
+        setError(err.message || 'Failed to load details');
+      } finally {
+        setLoading(false);
+      }
+    }
+    setExpanded(!expanded);
+  };
 
   return (
     <div className={styles.repoItem}>
-      <div className={styles.header}>
-        <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className={styles.name}>
-          {repo.name}
-        </a>
-      </div>
-      
-      {repo.description && <p className={styles.description}>{repo.description}</p>}
-      
-      <div className={styles.footer}>
-        {repo.language && (
+      <div className={styles.mainContent} onClick={handleExpand}>
+        <div className={styles.header}>
+          <a 
+            href={repo.html_url} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className={styles.name}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {repo.name}
+          </a>
+        </div>
+        
+        {repo.description && <p className={styles.description}>{repo.description}</p>}
+        
+        <div className={styles.footer}>
+          {repo.language && (
+            <div className={styles.stat}>
+              <span className={styles.langColor} style={{ backgroundColor: langColor }}></span>
+              {repo.language}
+            </div>
+          )}
           <div className={styles.stat}>
-            <span className={styles.langColor} style={{ backgroundColor: langColor }}></span>
-            {repo.language}
+            ⭐ {repo.stargazers_count}
           </div>
-        )}
-        <div className={styles.stat}>
-          ⭐ {repo.stargazers_count}
-        </div>
-        <div className={styles.stat}>
-          Updated {getRelativeTime(repo.updated_at)}
+          <div className={styles.stat}>
+            Updated {getRelativeTime(repo.updated_at)}
+          </div>
         </div>
       </div>
+      
+      {expanded && (
+        <div className={styles.expandedContent}>
+          {loading && <div className={styles.spinner}>Loading details...</div>}
+          {error && <div className={styles.error}>{error}</div>}
+          {details && !loading && !error && (
+            <div className={styles.detailsGrid}>
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>Open Issues:</span>
+                <span className={styles.detailValue}>{details.open_issues_count}</span>
+              </div>
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>Default Branch:</span>
+                <span className={styles.detailValue}>{details.default_branch}</span>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
