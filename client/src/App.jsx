@@ -1,5 +1,11 @@
 import { useState } from 'react';
 import SearchBar from './components/SearchBar';
+import ProfileCard from './components/ProfileCard';
+import SortControls from './components/SortControls';
+import RepoList from './components/RepoList';
+import Skeleton from './components/Skeleton';
+import ErrorMessage from './components/ErrorMessage';
+import { getUser, getRepos } from './api/github';
 import './App.css';
 
 function App() {
@@ -12,9 +18,60 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const fetchUserAndRepos = async (searchName) => {
+    setLoading(true);
+    setError(null);
+    setUser(null);
+    setRepos([]);
+    setPage(1);
+    
+    try {
+      const userData = await getUser(searchName);
+      setUser(userData);
+      
+      const reposData = await getRepos(searchName, { page: 1, sort });
+      setRepos(reposData);
+      setHasMore(reposData.length === 100);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSearch = (searchName) => {
     setUsername(searchName);
-    // Fetch logic will be integrated later
+    fetchUserAndRepos(searchName);
+  };
+
+  const handleSortChange = async (newSort) => {
+    setSort(newSort);
+    setPage(1);
+    if (!username) return;
+    
+    setLoading(true);
+    try {
+      const reposData = await getRepos(username, { page: 1, sort: newSort });
+      setRepos(reposData);
+      setHasMore(reposData.length === 100);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLoadMore = async () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    
+    try {
+      const reposData = await getRepos(username, { page: nextPage, sort });
+      setRepos((prev) => [...prev, ...reposData]);
+      setHasMore(reposData.length === 100);
+    } catch (err) {
+      setError(err);
+    }
   };
 
   return (
@@ -29,6 +86,20 @@ function App() {
             <span role="img" aria-label="search icon" className="empty-icon">🔍</span>
             <p>Search for a GitHub user to get started</p>
           </div>
+        )}
+        
+        {loading && !user && <Skeleton />}
+        
+        {error && <ErrorMessage error={error} onRetry={() => fetchUserAndRepos(username)} />}
+        
+        {user && !error && (
+          <>
+            <ProfileCard user={user} />
+            <div className="repos-section">
+              <SortControls sort={sort} onChange={handleSortChange} />
+              <RepoList repos={repos} hasMore={hasMore} onLoadMore={handleLoadMore} />
+            </div>
+          </>
         )}
       </main>
     </div>

@@ -27,11 +27,19 @@
   background-color: #f6f8fa;
   border-radius: 6px;
   border: 1px dashed #d0d7de;
+  width: 100%;
 }
 
 .empty-icon {
   font-size: 48px;
   margin-bottom: 16px;
+}
+
+.repos-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
 }
 
 @media (min-width: 768px) {
