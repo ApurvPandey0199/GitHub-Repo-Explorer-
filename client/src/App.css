@@ -1,17 +1,22 @@
 .app-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 32px 16px;
+  padding: 40px 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
-  margin-bottom: 40px;
+  margin-bottom: 48px;
+  animation: fadeIn 0.6s ease-out;
 }
 
 .main-content {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
+  animation: fadeIn 0.8s ease-out;
 }
 
 .empty-state {
@@ -19,19 +24,30 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 20px;
+  padding: 100px 20px;
   text-align: center;
   color: var(--text-secondary);
   background: var(--panel-bg);
-  border-radius: 12px;
-  border: 1px dashed var(--panel-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: 24px;
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--glass-shadow);
   width: 100%;
+  animation: fadeIn 0.5s ease-out;
 }
 
 .empty-icon {
-  font-size: 48px;
-  margin-bottom: 16px;
-  opacity: 0.7;
+  font-size: 64px;
+  margin-bottom: 24px;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 .repos-section {
@@ -39,6 +55,7 @@
   flex-direction: column;
   flex: 1;
   width: 100%;
+  gap: 20px;
 }
 
 .left-column {
@@ -48,10 +65,10 @@
   width: 100%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 860px) {
   .left-column {
-    width: 320px;
-    min-width: 320px;
+    width: 340px;
+    min-width: 340px;
   }
   .main-content {
     flex-direction: row;

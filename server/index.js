@@ -7,7 +7,7 @@ const githubRoutes = require('./routes/github');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(cors({ origin: ['http://localhost:5173', 'https://your-app.vercel.app'] }));
+app.use(cors()); // Allow all origins to prevent Network Errors when ports change
 app.use(express.json());
 
 app.get('/health', (req, res) => {
@@ -26,3 +26,4 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
