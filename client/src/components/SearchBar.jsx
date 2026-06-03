@@ -47,6 +47,7 @@ export default function SearchBar({ onSearch, isLoading, initialValue = '' }) {
           type="text"
           className={styles.searchInput}
           placeholder="Search for a GitHub user..."
+          aria-label="GitHub username search"
           value={input}
           onChange={(e) => {
             setInput(e.target.value);

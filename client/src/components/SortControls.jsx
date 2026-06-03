@@ -14,6 +14,7 @@ export default function SortControls({ sort, onChange }) {
         className={styles.select} 
         value={sort} 
         onChange={(e) => onChange(e.target.value)}
+        aria-label="Sort repositories"
       >
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>{opt.label}</option>
