@@ -1,0 +1,41 @@
+.repoListContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.loadMoreBtn {
+  padding: 12px 24px;
+  background-color: #f6f8fa;
+  color: #0969da;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+  transition: all 0.2s;
+  align-self: center;
+}
+
+.loadMoreBtn:hover {
+  background-color: #0969da;
+  color: white;
+  border-color: #0969da;
+}
+
+.emptyList {
+  padding: 32px;
+  text-align: center;
+  color: #57606a;
+  background: white;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+}
